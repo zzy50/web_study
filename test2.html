@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+    <div id="map-container">
+        <div id="map">메일버튼</div>
+    </div>
+    <div id="cctv-container">
+        <div id="search-container">
+            <input type="text" id="search" placeholder="검색어를 입력하세요">
+            <button id="search-button">검색</button>
+        </div>
+        <ul id="cctv-list">
+            <li class="cctv-juso" onclick="toggleChildList(this)">CCTV 1
+                <ul class="cctv-juso">
+                    <li class="cctv-juso" onclick="toggleChildList(this)">CCTV 1-1
+                        <ul class="child-list">
+                            <li class="cctv-item">CCTV 1-1-1</li>
+                            <li class="cctv-item">CCTV 1-1-2</li>
+                        </ul>
+                    </li>
+                    <li class="cctv-juso">CCTV 1-2</li>
+                </ul>
+            </li>
+            <li class="cctv-juso" onclick="toggleChildList(this)">CCTV 2</li>
+            <li class="cctv-juso" onclick="toggleChildList(this)">CCTV 3
+                <ul class="child-list">
+                    <li class="cctv-item">CCTV 3-1</li>
+                    <li class="cctv-item">CCTV 3-2</li>
+                    <li class="cctv-item">CCTV 3-3</li>
+                </ul>
+            </li>
+            <li class="cctv-item" onclick="toggleChildList(this)">CCTV 4</li>
+        </ul>
+    </div>
+
+    <div id="video-container"></div>
+
+    <script type="text/javascript" src="/js/common/openlayers/ol.js"></script>
+    <link rel="stylesheet" href="/js/common/openlayers/ol.css">
+    <script th:inline="javascript">
+        /* OpenLayers를 사용하여 지도 초기화 */
+        var map;
+
+        function initMaplocal() {
+            map = new ol.Map({
+                target: 'map',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([126.9779, 37.5665]),
+                    zoom: 12
+                })
+            });
+        }
+
+        function initMap() {
+            map = new ol.Map({
+                target: 'map',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM({
+                            url: "localhost:28888/{z}/{x}/{y}.png"
+                        })
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([126.9779, 37.5665]),
+                    zoom: 12
+                })
+            });
+        }
+
+        /* 마커 추가 */
+        var markerLayer = new ol.layer.Vector({
+            source: new ol.source.Vector()
+        });
+
+        /* 마커 정보 가져오기 */
+        fetch('/api/markers')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (markers) {
+                var markers = [
+                    { longitude: 126.9779, latitude: 37.5665, name: 'Marker 1' },
+                    { longitude: 126.9789, latitude: 37.5675, name: 'Marker 2' },
+                    { longitude: 126.9799, latitude: 37.5685, name: 'Marker 3' }
+                ];
+                markers.forEach(function (marker) {
+                    var markerStyle = new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 10,
+                            fill: new ol.style.Fill({ color: 'red' }),
+                            stroke: new ol.style.Stroke({ color: 'white', width: 2 })
+                        })
+                    });
+                    var markerFeature = new ol.Feature({
+                        geometry: new ol.geom.Point(ol.proj.fromLonLat([marker.longitude, marker.latitude])),
+                        name: marker.name
+                    });
+
+                    markerFeature.setStyle(markerStyle)
+
+                    markerLayer.getSource().addFeature(markerFeature);
+                });
+
+                map.addLayer(markerLayer);
+            });
+
+        // 지도 초기화 함수 호출
+        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            initMaplocal();
+        } else {
+            initMap();
+        }
+    </script>
+</body>
+
+</html>
