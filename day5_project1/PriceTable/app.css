@@ -1,0 +1,182 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+
+   CSS 리셋:
+    일부 브라우저는 기본 패딩이나 여백이나 헤딩 글꼴 크기가 다르므로
+    브라우저 스타일을 여러 브라우저에서 정규화하기 위해서 사용하는 템플릿
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+
+/* FlexBox란? */
+
+/* 최근 2~3년 전에 모든 브라우저에서 표준화 된 개념  */
+/* 페이지의 콘텐츠 상자 안에 아이템을 배치하는데 쓰임 */
+
+/* 하나의 컨테이너 안에서 요소들 사이에 공간을 얼마나 띄울지 */
+/* 요소들을 각각 어디에 배치할 지 */
+/* 요소들 간의 공간을 균등하게 할지 말지 등, 다양한 요소를 보기 좋게 배열하면서 레이아웃을 유연하게 조절할 수 있음 */
+
+
+/* 기본 스타일 설정 */
+html {
+  box-sizing: border-box; /* 모든 요소의 패딩과 테두리를 너비와 높이에 포함 */
+  font-family: 'Open Sans', sans-serif; /* 기본 글꼴 설정 */
+}
+
+body {
+  background-color: #60a9ff;
+  display: flex; /* flexbox 레이아웃 사용 */
+  justify-content: center; /* 가운데 정렬 (수평) */
+  align-items: center; /* 가운데 정렬 (수직) */
+  min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정 */
+}
+
+/* 패널 스타일 */
+.panel {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px 25px; /* 내부 패딩 */
+  width: 100%;
+  max-width: 960px;
+  display: flex; /* flexbox 레이아웃 사용 */
+  flex-direction: column; /* 자식 요소를 수직 방향으로 배열 */
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.pricing-plan {
+  border-bottom: 1px solid #e1f1ff;
+}
+
+.pricing-plan:last-child {
+  border-bottom: none; /* 마지막 가격 플랜의 하단 테두리 제거 */
+}
+
+.pricing-img {
+  margin-bottom: 25px; /* 이미지 하단에 여백 추가 */
+  max-width: 100%;
+}
+
+.pricing-header {
+  color: #888;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.pricing-features {
+  margin: 50px 0 25px;
+  color: #016ff9;
+}
+
+.pricing-features-item {
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 15px 0;
+  border-top: 1px solid #e1f1ff;
+}
+
+.pricing-features-item:last-child {
+  border-bottom: 1px solid #e1f1ff;
+}
+
+.pricing-price {
+  color: #016ff9;
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.pricing-button {
+  border: 1px solid #9dd1ff;
+  border-radius: 10px;
+  color: #348efe;
+  display: inline-block; /* inline-block 형태로 표시 */
+  padding: 15px 35px;
+  text-decoration: none; /* 텍스트 밑줄 제거 */
+  margin: 25px 0;
+  transition: background-color 200ms ease-in-out; 
+  /* background-color: background-color에 애니메이션 효과 설정 */
+  /* 200ms: 애니메이션 지속시간 200ms */
+  /* ease-in-out: 애니메이션 시작 시와 종료 시에 속도가 천천히 증가하거나 감소 */
+}
+
+/* 버튼 호버 및 포커스 스타일 */
+.pricing-button:hover, .pricing-button:focus {
+  background-color: #e1f1ff;
+}
+
+/* 추천 버튼 스타일 */
+.pricing-button.is-featured {
+  background-color: #48aaff;
+  color: white;
+}
+
+/* 추천 버튼 호버 및 포커스 스타일 */
+.pricing-button.is-featured:hover, .pricing-button.is-featured:focus {
+  background-color: #269aff;
+  color: white;
+}
+
+
+/* 화면 너비가 900px 이상일 때의 스타일 */
+@media (min-width: 900px){
+  .panel {
+    flex-direction: row; /* 패널의 자식 요소를 수평 방향으로 배열 */
+  }
+  .pricing-plan {
+    border-bottom: none;
+    border-right: 1px solid #e1f1ff;
+    padding: 25px 50px;
+  }
+  .pricing-plan:last-child {
+    border-right: none;
+  }
+}
