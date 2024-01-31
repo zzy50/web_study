@@ -1,7 +1,3 @@
-// async function hello() {
-// }
-
-
 const sing = async () => {
     throw "OH NO, PROBLEM!"
     return 'LA LA LA LA'

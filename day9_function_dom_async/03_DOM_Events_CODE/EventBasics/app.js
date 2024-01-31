@@ -32,8 +32,8 @@ function shout() {
 
 const tasButton = document.querySelector('#tas');
 
-// tasButton.onclick = twist;
-// tasButton.onclick = shout;
+tasButton.onclick = twist;
+tasButton.onclick = shout;
 
-tasButton.addEventListener('click', twist)
+// tasButton.addEventListener('click', twist, {once: true})
 tasButton.addEventListener('click', shout)
